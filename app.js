@@ -25,11 +25,11 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/views/index.html'));
 });
 
-app.get('/new/:url', function (req, res) {
-    let longUrl = req.params.url;
+app.get('/new/*', function (req, res) {
+    let longUrl = req.params[0];
     let shortUrl = ''; // the shortened URL we'll return
 
-    console.log('posted url: ' + req.params.url);
+    console.log('posted url: ' + longUrl);
     
     // check if url already exists in database
     Url.findOne({ long_url: longUrl }, function (err, doc) {
@@ -72,7 +72,7 @@ app.get('/:encoded_id', function (req, res) {
         if (doc) {
             console.log("document found!");
             // found an entry in the DB, redirect the user to their destination
-            res.redirect("https://" + doc.long_url);
+            res.redirect(doc.long_url);
         } else {
             // nothing found, go home
             res.redirect(config.webhost);
