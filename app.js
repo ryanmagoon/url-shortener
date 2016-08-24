@@ -9,8 +9,11 @@ let base58 = require('./base58.js');
 // grab the url model
 let Url = require('./models/url.js');
 
+// get the mongo connection string
+let mongoCreds = process.env.MONGODB_URI || ('mongodb://' + config.db.host + '/' + config.db.name);
+
 // create a conntection to our MongoDB
-mongoose.connect('mongodb://' + config.db.host + '/' + config.db.name);
+mongoose.connect(mongoCreds);
 
 // handles JSON bodies
 app.use(bodyParser.json());
