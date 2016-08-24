@@ -34,7 +34,9 @@ app.get('/new/*', function (req, res) {
 
     console.log('posted url: ' + longUrl);
     if (longUrl.search(/http:\/\/www\.[\w]+\.com/) === -1) {
-        throw Error('incompatible url format!');
+        res.send({
+            error: 'incompatible url format!'
+        });
     }
 
     // check if url already exists in database
